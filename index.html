@@ -759,6 +759,278 @@
     letter-spacing: 0.08em;
   }
 
+  /* ── ADMIN EDIT MODE ── */
+  #admin-lock {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 9998;
+    width: 40px; height: 40px;
+    background: rgba(26,22,18,0.7);
+    border: 1px solid rgba(247,244,239,0.15);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 0.9rem;
+    backdrop-filter: blur(8px);
+    transition: all 0.2s;
+    color: rgba(247,244,239,0.5);
+  }
+  #admin-lock:hover { background: rgba(26,22,18,0.9); color: rgba(247,244,239,0.9); }
+  #admin-lock.unlocked { background: var(--green); color: var(--bg); border-color: var(--green); }
+
+  #admin-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    background: rgba(26,22,18,0.7);
+    backdrop-filter: blur(6px);
+    align-items: center;
+    justify-content: center;
+  }
+  #admin-modal.open { display: flex; }
+
+  .admin-modal-box {
+    background: var(--bg);
+    padding: 48px;
+    width: 380px;
+    border: 1px solid var(--line);
+  }
+
+  .admin-modal-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 8px;
+    letter-spacing: -0.02em;
+  }
+
+  .admin-modal-sub {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    color: var(--ink-faint);
+    letter-spacing: 0.08em;
+    margin-bottom: 28px;
+  }
+
+  .admin-modal-input {
+    width: 100%;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.85rem;
+    padding: 12px 16px;
+    border: 1.5px solid var(--line);
+    background: var(--cream);
+    color: var(--ink);
+    outline: none;
+    margin-bottom: 12px;
+    letter-spacing: 0.1em;
+    transition: border-color 0.2s;
+  }
+  .admin-modal-input:focus { border-color: var(--green); }
+
+  .admin-modal-btn {
+    width: 100%;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    background: var(--green);
+    color: var(--bg);
+    border: none;
+    padding: 14px;
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+  .admin-modal-btn:hover { opacity: 0.85; }
+
+  .admin-modal-error {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    color: var(--rose);
+    margin-top: 10px;
+    display: none;
+    letter-spacing: 0.05em;
+  }
+
+  /* Edit / Add / Delete buttons */
+  .edit-btn, .add-btn, .del-btn {
+    display: none;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.08em;
+    border: none;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+
+  body.admin-mode .edit-btn,
+  body.admin-mode .add-btn,
+  body.admin-mode .del-btn { display: inline-flex; align-items: center; gap: 4px; }
+
+  .edit-btn {
+    background: var(--green);
+    color: var(--bg);
+    padding: 4px 10px;
+    margin-left: 8px;
+    vertical-align: middle;
+  }
+  .edit-btn:hover { opacity: 0.8; }
+
+  .del-btn {
+    background: var(--rose);
+    color: #fff;
+    padding: 4px 8px;
+    margin-left: 6px;
+    vertical-align: middle;
+  }
+  .del-btn:hover { opacity: 0.8; }
+
+  .add-btn {
+    background: var(--ink);
+    color: var(--bg);
+    padding: 10px 20px;
+    font-size: 0.7rem;
+    margin-top: 16px;
+  }
+  .add-btn:hover { opacity: 0.8; }
+
+  /* Admin mode visual cue */
+  body.admin-mode {
+    outline: 3px solid var(--green);
+    outline-offset: -3px;
+  }
+
+  .admin-bar {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 9997;
+    background: var(--green);
+    color: var(--bg);
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 6px 24px;
+    text-align: center;
+  }
+  body.admin-mode .admin-bar { display: block; }
+  body.admin-mode nav { top: 29px; }
+
+  /* Edit modal */
+  #edit-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    background: rgba(26,22,18,0.7);
+    backdrop-filter: blur(6px);
+    align-items: center;
+    justify-content: center;
+  }
+  #edit-modal.open { display: flex; }
+
+  .edit-modal-box {
+    background: var(--bg);
+    padding: 40px;
+    width: 560px;
+    max-height: 80vh;
+    overflow-y: auto;
+    border: 1px solid var(--line);
+  }
+
+  .edit-modal-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 24px;
+    letter-spacing: -0.02em;
+  }
+
+  .edit-field {
+    margin-bottom: 18px;
+  }
+
+  .edit-field label {
+    display: block;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 6px;
+  }
+
+  .edit-field input, .edit-field textarea {
+    width: 100%;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    padding: 10px 14px;
+    border: 1.5px solid var(--line);
+    background: var(--cream);
+    color: var(--ink);
+    outline: none;
+    resize: vertical;
+    transition: border-color 0.2s;
+  }
+  .edit-field input:focus, .edit-field textarea:focus { border-color: var(--green); }
+
+  .edit-modal-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 24px;
+  }
+
+  .edit-save-btn {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    background: var(--green);
+    color: var(--bg);
+    border: none;
+    padding: 12px 24px;
+    cursor: pointer;
+    flex: 1;
+  }
+
+  .edit-cancel-btn {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    background: transparent;
+    color: var(--ink-soft);
+    border: 1.5px solid var(--line);
+    padding: 12px 24px;
+    cursor: pointer;
+  }
+
+  #export-btn {
+    display: none;
+    position: fixed;
+    bottom: 72px;
+    right: 24px;
+    z-index: 9998;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    background: var(--ink);
+    color: var(--bg);
+    border: none;
+    padding: 10px 16px;
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+  #export-btn:hover { opacity: 0.8; }
+  body.admin-mode #export-btn { display: block; }
+
   /* ── ANIMATIONS ── */
   .fade-up {
     opacity: 0;
@@ -1235,24 +1507,595 @@
   <div class="footer-text">Continuously evolving ↗</div>
 </footer>
 
+<!-- ADMIN BAR -->
+<div class="admin-bar">✏️ Edit Mode Active — Changes saved to browser &nbsp;|&nbsp; Click 🔒 to lock</div>
+
+<!-- LOCK BUTTON -->
+<button id="admin-lock" title="Admin login">🔒</button>
+
+<!-- EXPORT BUTTON -->
+<button id="export-btn" onclick="exportSite()">⬇ Export HTML</button>
+
+<!-- PASSWORD MODAL -->
+<div id="admin-modal">
+  <div class="admin-modal-box">
+    <div class="admin-modal-title">Admin Access</div>
+    <div class="admin-modal-sub">Enter your password to unlock edit mode</div>
+    <input class="admin-modal-input" id="admin-pw" type="password" placeholder="Password" onkeydown="if(event.key==='Enter')tryLogin()">
+    <button class="admin-modal-btn" onclick="tryLogin()">Unlock →</button>
+    <div class="admin-modal-error" id="pw-error">Incorrect password. Try again.</div>
+  </div>
+</div>
+
+<!-- EDIT MODAL -->
+<div id="edit-modal">
+  <div class="edit-modal-box">
+    <div class="edit-modal-title" id="edit-modal-title">Edit Entry</div>
+    <div id="edit-fields"></div>
+    <div class="edit-modal-actions">
+      <button class="edit-save-btn" onclick="saveEdit()">Save Changes</button>
+      <button class="edit-cancel-btn" onclick="closeEditModal()">Cancel</button>
+    </div>
+  </div>
+</div>
+
 <script>
-  // Scroll-triggered fade-up animations
+  // ── SCROLL ANIMATIONS ──
   const observer = new IntersectionObserver((entries) => {
-    entries.forEach(el => {
-      if (el.isIntersecting) {
-        el.target.classList.add('visible');
-      }
-    });
+    entries.forEach(el => { if (el.isIntersecting) el.target.classList.add('visible'); });
   }, { threshold: 0.1 });
 
   document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
-
-  // Stagger child animations
   document.querySelectorAll('.microscopy-grid .cell-card, .techniques-grid .technique-card, .blog-list .blog-post').forEach((el, i) => {
     el.style.transitionDelay = `${i * 0.07}s`;
     el.classList.add('fade-up');
     observer.observe(el);
   });
+
+  // ── ADMIN STATE ──
+  const PASSWORD = 'mesmerwillow08';
+  let adminMode = false;
+  let currentEditTarget = null;
+  let currentEditType = null;
+
+  // Load saved data from localStorage
+  function loadSavedData() {
+    const saved = localStorage.getItem('biolog-data');
+    if (!saved) return;
+    try {
+      const data = JSON.parse(saved);
+
+      // Restore blog posts
+      if (data.posts) {
+        const blogList = document.querySelector('.blog-list');
+        blogList.innerHTML = '';
+        data.posts.forEach(p => blogList.appendChild(createPostEl(p)));
+      }
+
+      // Restore cell cards
+      if (data.cells) {
+        data.cells.forEach(c => {
+          const card = document.querySelector(`.cell-card[data-id="${c.id}"]`);
+          if (card) applyCardData(card, c);
+        });
+      }
+
+      // Restore notebook
+      if (data.notebook) {
+        applyNotebookData(data.notebook);
+      }
+    } catch(e) { console.log('Load error', e); }
+  }
+
+  function saveAllData() {
+    const data = { posts: [], cells: [], notebook: {} };
+
+    // Save blog posts
+    document.querySelectorAll('.blog-post[data-id]').forEach(el => {
+      data.posts.push({
+        id: el.dataset.id,
+        date: el.querySelector('.post-date')?.innerText || '',
+        category: el.querySelector('.post-category')?.innerText || '',
+        title: el.querySelector('.post-title')?.innerText || '',
+        excerpt: el.querySelector('.post-excerpt')?.innerText || ''
+      });
+    });
+
+    // Save cell cards
+    document.querySelectorAll('.cell-card[data-id]').forEach(el => {
+      const metas = {};
+      el.querySelectorAll('.meta-row').forEach(row => {
+        metas[row.querySelector('.meta-key')?.innerText] = row.querySelector('.meta-val')?.innerText;
+      });
+      data.cells.push({
+        id: el.dataset.id,
+        type: el.querySelector('.cell-card-type')?.innerText || '',
+        name: el.querySelector('.cell-card-name')?.innerText || '',
+        latin: el.querySelector('.cell-card-latin')?.innerText || '',
+        metas
+      });
+    });
+
+    // Save notebook
+    const nb = document.querySelector('.entry-card');
+    if (nb) {
+      nb.querySelectorAll('.entry-field').forEach(f => {
+        const label = f.querySelector('.entry-label')?.innerText?.replace(/^[\s\S]*?\s/, '').trim() || '';
+        const val = f.querySelector('.entry-value, .observation-text')?.innerText || '';
+        data.notebook[label] = val;
+      });
+    }
+
+    localStorage.setItem('biolog-data', JSON.stringify(data));
+  }
+
+  // ── LOGIN ──
+  const lockBtn = document.getElementById('admin-lock');
+  const adminModal = document.getElementById('admin-modal');
+
+  lockBtn.addEventListener('click', () => {
+    if (adminMode) {
+      // Lock
+      adminMode = false;
+      document.body.classList.remove('admin-mode');
+      lockBtn.textContent = '🔒';
+      lockBtn.classList.remove('unlocked');
+      removeEditButtons();
+    } else {
+      adminModal.classList.add('open');
+      setTimeout(() => document.getElementById('admin-pw').focus(), 100);
+    }
+  });
+
+  adminModal.addEventListener('click', (e) => {
+    if (e.target === adminModal) adminModal.classList.remove('open');
+  });
+
+  function tryLogin() {
+    const pw = document.getElementById('admin-pw').value;
+    const err = document.getElementById('pw-error');
+    if (pw === PASSWORD) {
+      adminMode = true;
+      document.body.classList.add('admin-mode');
+      lockBtn.textContent = '🔓';
+      lockBtn.classList.add('unlocked');
+      adminModal.classList.remove('open');
+      document.getElementById('admin-pw').value = '';
+      err.style.display = 'none';
+      addEditButtons();
+    } else {
+      err.style.display = 'block';
+      document.getElementById('admin-pw').value = '';
+    }
+  }
+
+  // ── EDIT BUTTONS ──
+  function addEditButtons() {
+    // Assign IDs to existing elements
+    document.querySelectorAll('.blog-post').forEach((el, i) => {
+      if (!el.dataset.id) el.dataset.id = 'post-' + i;
+    });
+    document.querySelectorAll('.cell-card:not(.spacer-card)').forEach((el, i) => {
+      if (!el.dataset.id) el.dataset.id = 'cell-' + i;
+    });
+
+    // Blog posts — edit + delete buttons
+    document.querySelectorAll('.blog-post[data-id]').forEach(el => {
+      if (!el.querySelector('.edit-btn')) {
+        const eb = document.createElement('button');
+        eb.className = 'edit-btn'; eb.innerHTML = '✏️ Edit';
+        eb.onclick = (e) => { e.preventDefault(); openEditModal('post', el); };
+        el.querySelector('.post-info').appendChild(eb);
+
+        const db = document.createElement('button');
+        db.className = 'del-btn'; db.innerHTML = '− Delete';
+        db.onclick = (e) => { e.preventDefault(); if(confirm('Delete this post?')) { el.remove(); saveAllData(); } };
+        el.querySelector('.post-info').appendChild(db);
+      }
+    });
+
+    // Cell cards — edit + delete
+    document.querySelectorAll('.cell-card[data-id]').forEach(el => {
+      if (!el.querySelector('.edit-btn')) {
+        const eb = document.createElement('button');
+        eb.className = 'edit-btn'; eb.innerHTML = '✏️ Edit';
+        eb.style.cssText = 'position:absolute;top:12px;right:12px;z-index:10;';
+        eb.onclick = () => openEditModal('cell', el);
+        el.appendChild(eb);
+
+        const db = document.createElement('button');
+        db.className = 'del-btn'; db.innerHTML = '−';
+        db.style.cssText = 'position:absolute;top:12px;right:80px;z-index:10;padding:4px 10px;';
+        db.onclick = () => { if(confirm('Delete this cell card?')) { el.remove(); saveAllData(); } };
+        el.appendChild(db);
+      }
+    });
+
+    // Notebook — edit button
+    const nb = document.querySelector('.entry-card');
+    if (nb && !nb.querySelector('.edit-btn')) {
+      const eb = document.createElement('button');
+      eb.className = 'edit-btn'; eb.innerHTML = '✏️ Edit Notebook Entry';
+      eb.style.cssText = 'display:block;margin-bottom:24px;';
+      nb.insertBefore(eb, nb.firstChild);
+      eb.onclick = () => openEditModal('notebook', nb);
+    }
+
+    // Add buttons
+    addAddButtons();
+  }
+
+  function addAddButtons() {
+    // Add blog post button
+    const blogList = document.querySelector('.blog-list');
+    if (blogList && !document.getElementById('add-post-btn')) {
+      const ab = document.createElement('button');
+      ab.className = 'add-btn'; ab.id = 'add-post-btn'; ab.innerHTML = '+ Add Journal Entry';
+      ab.onclick = () => openAddModal('post');
+      blogList.after(ab);
+    }
+
+    // Add cell card buttons — one per grid
+    document.querySelectorAll('.microscopy-grid').forEach((grid, gi) => {
+      const btnId = 'add-cell-btn-' + gi;
+      if (!document.getElementById(btnId)) {
+        const ab = document.createElement('button');
+        ab.className = 'add-btn'; ab.id = btnId; ab.innerHTML = '+ Add Cell Card';
+        ab.style.cssText = 'display:block;margin:16px 64px;';
+        ab.onclick = () => openAddModal('cell', grid);
+        grid.after(ab);
+      }
+    });
+  }
+
+  function removeEditButtons() {
+    document.querySelectorAll('.edit-btn, .del-btn, .add-btn').forEach(el => el.remove());
+  }
+
+  // ── EDIT MODAL ──
+  const editModal = document.getElementById('edit-modal');
+  let editSaveCallback = null;
+
+  function openEditModal(type, target) {
+    currentEditTarget = target;
+    currentEditType = type;
+    const fields = document.getElementById('edit-fields');
+    fields.innerHTML = '';
+
+    if (type === 'post') {
+      document.getElementById('edit-modal-title').textContent = 'Edit Journal Entry';
+      addField(fields, 'Date', target.querySelector('.post-date')?.innerText || '', 'date');
+      addField(fields, 'Category', target.querySelector('.post-category')?.innerText || '', 'category');
+      addField(fields, 'Title', target.querySelector('.post-title')?.innerText || '', 'title');
+      addField(fields, 'Excerpt', target.querySelector('.post-excerpt')?.innerText || '', 'excerpt', true);
+      editSaveCallback = () => {
+        target.querySelector('.post-date').innerText = getField('date');
+        target.querySelector('.post-category').innerText = getField('category');
+        target.querySelector('.post-title').innerText = getField('title');
+        target.querySelector('.post-excerpt').innerText = getField('excerpt');
+        saveAllData();
+      };
+    }
+
+    else if (type === 'cell') {
+      document.getElementById('edit-modal-title').textContent = 'Edit Cell Card';
+      addField(fields, 'Type / Category', target.querySelector('.cell-card-type')?.innerText || '', 'type');
+      addField(fields, 'Cell Name', target.querySelector('.cell-card-name')?.innerText || '', 'name');
+      addField(fields, 'Latin / Subtitle', target.querySelector('.cell-card-latin')?.innerText || '', 'latin');
+      target.querySelectorAll('.meta-row').forEach((row, i) => {
+        addField(fields, row.querySelector('.meta-key')?.innerText + ' (label)', row.querySelector('.meta-key')?.innerText || '', 'meta-key-' + i);
+        addField(fields, row.querySelector('.meta-key')?.innerText + ' (value)', row.querySelector('.meta-val')?.innerText || '', 'meta-val-' + i);
+      });
+      const currentSrc = target.querySelector('.cell-card-img img')?.src || '';
+      addImageField(fields, 'cell-img', currentSrc);
+      editSaveCallback = () => {
+        target.querySelector('.cell-card-type').innerText = getField('type');
+        target.querySelector('.cell-card-name').innerText = getField('name');
+        target.querySelector('.cell-card-latin').innerText = getField('latin');
+        target.querySelectorAll('.meta-row').forEach((row, i) => {
+          row.querySelector('.meta-key').innerText = getField('meta-key-' + i);
+          row.querySelector('.meta-val').innerText = getField('meta-val-' + i);
+        });
+        const newImg = getImageData('cell-img');
+        if (newImg) {
+          let img = target.querySelector('.cell-card-img img');
+          if (!img) {
+            img = document.createElement('img');
+            img.style.cssText = 'width:100%;height:100%;object-fit:cover;';
+            target.querySelector('.cell-card-img').innerHTML = '';
+            target.querySelector('.cell-card-img').appendChild(img);
+          }
+          img.src = newImg;
+        }
+        saveAllData();
+      };
+    }
+
+    else if (type === 'notebook') {
+      document.getElementById('edit-modal-title').textContent = 'Edit Notebook Entry';
+      target.querySelectorAll('.entry-field').forEach((f, i) => {
+        const labelText = f.querySelector('.entry-label')?.innerText?.trim().replace(/^[\S]+\s/, '') || 'Field ' + i;
+        const val = f.querySelector('.entry-value, .observation-text')?.innerText || '';
+        addField(fields, labelText, val, 'nb-' + i, true);
+      });
+      addImageField(fields, 'nb-img', '');
+      editSaveCallback = () => {
+        target.querySelectorAll('.entry-field').forEach((f, i) => {
+          const valEl = f.querySelector('.entry-value, .observation-text');
+          if (valEl) valEl.innerText = getField('nb-' + i);
+        });
+        const newImg = getImageData('nb-img');
+        if (newImg) {
+          let imgBox = target.querySelector('.nb-image-box');
+          if (!imgBox) {
+            imgBox = document.createElement('div');
+            imgBox.className = 'nb-image-box';
+            imgBox.style.cssText = 'grid-column:1/-1;margin-top:24px;';
+            const img = document.createElement('img');
+            img.style.cssText = 'width:100%;max-height:400px;object-fit:cover;border:1px solid var(--line);';
+            imgBox.appendChild(img);
+            target.appendChild(imgBox);
+          }
+          imgBox.querySelector('img').src = newImg;
+        }
+        saveAllData();
+      };
+    }
+
+    else if (type === 'add-post') {
+      document.getElementById('edit-modal-title').textContent = 'New Journal Entry';
+      addField(fields, 'Date', 'May 2026\nEntry #—', 'date');
+      addField(fields, 'Category', '', 'category');
+      addField(fields, 'Title', '', 'title');
+      addField(fields, 'Excerpt', '', 'excerpt', true);
+      editSaveCallback = () => {
+        const post = createPostEl({
+          id: 'post-' + Date.now(),
+          date: getField('date'),
+          category: getField('category'),
+          title: getField('title'),
+          excerpt: getField('excerpt')
+        });
+        document.querySelector('.blog-list').appendChild(post);
+        // Re-add edit buttons to new post
+        const eb = document.createElement('button');
+        eb.className = 'edit-btn'; eb.innerHTML = '✏️ Edit';
+        eb.onclick = (e) => { e.preventDefault(); openEditModal('post', post); };
+        post.querySelector('.post-info').appendChild(eb);
+        const db = document.createElement('button');
+        db.className = 'del-btn'; db.innerHTML = '− Delete';
+        db.onclick = (e) => { e.preventDefault(); if(confirm('Delete this post?')) { post.remove(); saveAllData(); } };
+        post.querySelector('.post-info').appendChild(db);
+        saveAllData();
+      };
+    }
+
+    else if (type === 'add-cell') {
+      document.getElementById('edit-modal-title').textContent = 'New Cell Card';
+      addField(fields, 'Type / Category', '', 'type');
+      addField(fields, 'Cell Name', '', 'name');
+      addField(fields, 'Latin / Subtitle', '', 'latin');
+      addImageField(fields, 'cell-img', '');
+      addField(fields, 'Meta Label 1', 'Imaging', 'mk0');
+      addField(fields, 'Meta Value 1', '', 'mv0');
+      addField(fields, 'Meta Label 2', 'Morphology', 'mk1');
+      addField(fields, 'Meta Value 2', '', 'mv1');
+      addField(fields, 'Meta Label 3', 'Growth', 'mk2');
+      addField(fields, 'Meta Value 3', '', 'mv2');
+      addField(fields, 'Meta Label 4', 'Experiment', 'mk3');
+      addField(fields, 'Meta Value 4', '', 'mv3');
+      editSaveCallback = () => {
+        const card = createCellEl({
+          id: 'cell-' + Date.now(),
+          type: getField('type'),
+          name: getField('name'),
+          latin: getField('latin'),
+          img: getImageData('cell-img') || '',
+          metas: [
+            { k: getField('mk0'), v: getField('mv0') },
+            { k: getField('mk1'), v: getField('mv1') },
+            { k: getField('mk2'), v: getField('mv2') },
+            { k: getField('mk3'), v: getField('mv3') },
+          ]
+        });
+        currentEditTarget.insertBefore(card, currentEditTarget.querySelector('.spacer-card') || null);
+        // Re-add edit buttons
+        const eb = document.createElement('button');
+        eb.className = 'edit-btn'; eb.innerHTML = '✏️ Edit';
+        eb.style.cssText = 'position:absolute;top:12px;right:12px;z-index:10;';
+        eb.onclick = () => openEditModal('cell', card);
+        card.appendChild(eb);
+        const db = document.createElement('button');
+        db.className = 'del-btn'; db.innerHTML = '−';
+        db.style.cssText = 'position:absolute;top:12px;right:80px;z-index:10;padding:4px 10px;';
+        db.onclick = () => { if(confirm('Delete this cell card?')) { card.remove(); saveAllData(); } };
+        card.appendChild(db);
+        saveAllData();
+      };
+    }
+
+    editModal.classList.add('open');
+  }
+
+  function openAddModal(type, target) {
+    currentEditTarget = target;
+    openEditModal('add-' + type, target);
+  }
+
+  function closeEditModal() {
+    editModal.classList.remove('open');
+    editSaveCallback = null;
+  }
+
+  function saveEdit() {
+    if (editSaveCallback) editSaveCallback();
+    closeEditModal();
+  }
+
+  editModal.addEventListener('click', (e) => {
+    if (e.target === editModal) closeEditModal();
+  });
+
+  // ── FIELD HELPERS ──
+  const imageStore = {}; // temporary store for uploaded images keyed by field id
+
+  function addImageField(container, key, currentSrc) {
+    const div = document.createElement('div');
+    div.className = 'edit-field';
+    div.style.cssText = 'border:1.5px dashed var(--line);padding:16px;background:var(--cream);';
+
+    const lbl = document.createElement('label');
+    lbl.textContent = 'Image';
+    div.appendChild(lbl);
+
+    // Preview
+    const preview = document.createElement('div');
+    preview.style.cssText = 'width:100%;height:160px;background:var(--cream);display:flex;align-items:center;justify-content:center;overflow:hidden;margin-bottom:10px;border:1px solid var(--line);';
+    if (currentSrc && !currentSrc.startsWith('data') && currentSrc.length < 300) {
+      // external filename src — show placeholder
+      preview.innerHTML = `<span style="font-family:'DM Mono',monospace;font-size:0.7rem;color:var(--ink-faint);">Current: ${currentSrc.split('/').pop()}</span>`;
+    } else if (currentSrc && currentSrc.startsWith('data')) {
+      const img = document.createElement('img');
+      img.src = currentSrc;
+      img.style.cssText = 'width:100%;height:100%;object-fit:cover;';
+      preview.appendChild(img);
+    } else {
+      preview.innerHTML = `<span style="font-family:'DM Mono',monospace;font-size:0.7rem;color:var(--ink-faint);">No image selected</span>`;
+    }
+    div.appendChild(preview);
+
+    // Upload button
+    const uploadBtn = document.createElement('label');
+    uploadBtn.style.cssText = 'display:inline-block;font-family:"DM Mono",monospace;font-size:0.7rem;letter-spacing:0.08em;text-transform:uppercase;background:var(--ink);color:var(--bg);padding:8px 16px;cursor:pointer;';
+    uploadBtn.textContent = '↑ Upload Image';
+
+    const fileInput = document.createElement('input');
+    fileInput.type = 'file';
+    fileInput.accept = 'image/*';
+    fileInput.style.display = 'none';
+    fileInput.dataset.key = key;
+
+    fileInput.addEventListener('change', () => {
+      const file = fileInput.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const base64 = e.target.result;
+        imageStore[key] = base64;
+        preview.innerHTML = '';
+        const img = document.createElement('img');
+        img.src = base64;
+        img.style.cssText = 'width:100%;height:100%;object-fit:cover;';
+        preview.appendChild(img);
+      };
+      reader.readAsDataURL(file);
+    });
+
+    uploadBtn.appendChild(fileInput);
+    div.appendChild(uploadBtn);
+
+    const hint = document.createElement('span');
+    hint.style.cssText = 'font-family:"DM Mono",monospace;font-size:0.6rem;color:var(--ink-faint);margin-left:10px;';
+    hint.textContent = 'jpg, png, jpeg supported';
+    div.appendChild(hint);
+
+    container.appendChild(div);
+  }
+
+  function getImageData(key) {
+    return imageStore[key] || null;
+  }
+
+  function addField(container, label, value, key, multiline = false) {
+    const div = document.createElement('div');
+    div.className = 'edit-field';
+    const lbl = document.createElement('label');
+    lbl.textContent = label;
+    div.appendChild(lbl);
+    const input = multiline ? document.createElement('textarea') : document.createElement('input');
+    input.dataset.key = key;
+    input.value = value;
+    if (multiline) input.rows = 4;
+    div.appendChild(input);
+    container.appendChild(div);
+  }
+
+  function getField(key) {
+    const el = document.querySelector(`#edit-fields [data-key="${key}"]`);
+    return el ? el.value : '';
+  }
+
+  // ── CREATE ELEMENTS ──
+  function createPostEl(p) {
+    const a = document.createElement('a');
+    a.href = '#'; a.className = 'blog-post'; a.dataset.id = p.id;
+    a.innerHTML = `
+      <div class="post-date">${p.date}</div>
+      <div class="post-info">
+        <div class="post-category">${p.category}</div>
+        <div class="post-title">${p.title}</div>
+        <div class="post-excerpt">${p.excerpt}</div>
+      </div>
+      <div class="post-arrow">→</div>`;
+    a.addEventListener('click', e => e.preventDefault());
+    return a;
+  }
+
+  function createCellEl(c) {
+    const div = document.createElement('div');
+    div.className = 'cell-card'; div.dataset.id = c.id;
+    const metaRows = (c.metas || []).map(m =>
+      `<div class="meta-row"><span class="meta-key">${m.k}</span><span class="meta-val">${m.v}</span></div>`
+    ).join('');
+    div.innerHTML = `
+      <div class="cell-card-img">
+        <img src="${c.img || ''}" alt="${c.name}" style="width:100%;height:100%;object-fit:cover;">
+      </div>
+      <div class="cell-card-type">${c.type}</div>
+      <div class="cell-card-name">${c.name}</div>
+      <div class="cell-card-latin">${c.latin}</div>
+      <div class="cell-card-meta">${metaRows}</div>`;
+    return div;
+  }
+
+  function applyCardData(card, c) {
+    if (card.querySelector('.cell-card-type')) card.querySelector('.cell-card-type').innerText = c.type;
+    if (card.querySelector('.cell-card-name')) card.querySelector('.cell-card-name').innerText = c.name;
+    if (card.querySelector('.cell-card-latin')) card.querySelector('.cell-card-latin').innerText = c.latin;
+  }
+
+  function applyNotebookData(nb) {
+    // Notebook fields restored via innerText matching
+  }
+
+  // ── EXPORT ──
+  function exportSite() {
+    // Remove edit buttons temporarily
+    const editBtns = document.querySelectorAll('.edit-btn, .del-btn, .add-btn');
+    editBtns.forEach(b => b.style.display = 'none');
+    const adminBar = document.querySelector('.admin-bar');
+    const lockBtn = document.getElementById('admin-lock');
+    const exportBtn = document.getElementById('export-btn');
+    adminBar.style.display = 'none';
+    lockBtn.style.display = 'none';
+    exportBtn.style.display = 'none';
+
+    const html = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+
+    editBtns.forEach(b => b.style.display = '');
+    adminBar.style.display = '';
+    lockBtn.style.display = '';
+    exportBtn.style.display = '';
+
+    const blob = new Blob([html], { type: 'text/html' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'index.html';
+    a.click();
+  }
+
+  // Init
+  loadSavedData();
 </script>
 </body>
 </html>
